@@ -1,26 +1,16 @@
 // ===========================
 // Firebase Configuration
 // ===========================
-// 🔧 INSTRUÇÕES DE CONFIGURAÇÃO:
-// 1. Acesse https://console.firebase.google.com/
-// 2. Crie um novo projeto (ex: "sepesqi-monitoria")
-// 3. Vá em "Realtime Database" e crie um banco de dados
-// 4. Nas regras de segurança, use as regras abaixo para teste:
-//    {
-//      "rules": {
-//        ".read": true,
-//        ".write": true
-//      }
-//    }
-// 5. Vá em Configurações do projeto > Geral > Seus apps > Adicionar app web
-// 6. Copie os dados do firebaseConfig e substitua abaixo
+// Projeto: sepesqi-51083
+// App: sepesqi-web
 
 const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_PROJECT.firebaseapp.com",
-    databaseURL: "https://YOUR_PROJECT-default-rtdb.firebaseio.com",
-    projectId: "YOUR_PROJECT",
-    storageBucket: "YOUR_PROJECT.appspot.com",
-    messagingSenderId: "YOUR_SENDER_ID",
-    appId: "YOUR_APP_ID"
+    apiKey: "AIzaSyAOZbtYuXWxpvifO3oF1sOIa5w6WZlnWwY",
+    authDomain: "sepesqi-51083.firebaseapp.com",
+    databaseURL: "https://sepesqi-51083-default-rtdb.firebaseio.com",
+    projectId: "sepesqi-51083",
+    storageBucket: "sepesqi-51083.firebasestorage.app",
+    messagingSenderId: "213422805817",
+    appId: "1:213422805817:web:9df06af8abb600c7680ee8",
+    measurementId: "G-5905Z6RVMQ"
 };

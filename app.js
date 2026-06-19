@@ -456,6 +456,107 @@
         return div.innerHTML;
     }
 
+    // ---- Excel Export ----
+    function exportToExcel() {
+        if (typeof XLSX === 'undefined') {
+            showToast('error', '❌', 'Biblioteca de exportação não carregou. Recarregue a página.');
+            return;
+        }
+
+        const wb = XLSX.utils.book_new();
+
+        // Create a summary sheet with all data
+        const summaryRows = [];
+        summaryRows.push(['SEPESQI Martha Falcão – Monitoria 2026']);
+        summaryRows.push(['Relatório de Reservas de Voluntários']);
+        summaryRows.push([`Exportado em: ${new Date().toLocaleString('pt-BR')}`]);
+        summaryRows.push([]);
+
+        Object.entries(SLOT_DATA).forEach(([dayKey, dayData]) => {
+            summaryRows.push([dayData.label]);
+            summaryRows.push(['Turno', 'Categoria', 'Local/Função', 'Voluntário', 'Status']);
+
+            Object.entries(dayData.shifts).forEach(([shiftKey, shift]) => {
+                shift.categories.forEach(cat => {
+                    cat.slots.forEach(slot => {
+                        const reservation = reservations[slot.id];
+                        summaryRows.push([
+                            shift.label,
+                            cat.name,
+                            slot.room,
+                            reservation ? reservation.name : '',
+                            reservation ? '✅ Reservado' : '⬜ Disponível'
+                        ]);
+                    });
+                });
+            });
+
+            summaryRows.push([]);
+        });
+
+        const summaryWs = XLSX.utils.aoa_to_sheet(summaryRows);
+
+        // Set column widths
+        summaryWs['!cols'] = [
+            { wch: 14 },  // Turno
+            { wch: 30 },  // Categoria
+            { wch: 28 },  // Local
+            { wch: 30 },  // Voluntário
+            { wch: 16 },  // Status
+        ];
+
+        // Merge title cells
+        summaryWs['!merges'] = [
+            { s: { r: 0, c: 0 }, e: { r: 0, c: 4 } },
+            { s: { r: 1, c: 0 }, e: { r: 1, c: 4 } },
+            { s: { r: 2, c: 0 }, e: { r: 2, c: 4 } },
+        ];
+
+        XLSX.utils.book_append_sheet(wb, summaryWs, 'Resumo Geral');
+
+        // Create individual sheets for each day
+        Object.entries(SLOT_DATA).forEach(([dayKey, dayData]) => {
+            const rows = [];
+            rows.push(['Turno', 'Categoria', 'Local/Função', 'Voluntário', 'Status']);
+
+            Object.entries(dayData.shifts).forEach(([shiftKey, shift]) => {
+                shift.categories.forEach(cat => {
+                    cat.slots.forEach(slot => {
+                        const reservation = reservations[slot.id];
+                        rows.push([
+                            shift.label,
+                            cat.name,
+                            slot.room,
+                            reservation ? reservation.name : '',
+                            reservation ? 'Reservado' : 'Disponível'
+                        ]);
+                    });
+                });
+            });
+
+            const ws = XLSX.utils.aoa_to_sheet(rows);
+            ws['!cols'] = [
+                { wch: 14 },
+                { wch: 30 },
+                { wch: 28 },
+                { wch: 30 },
+                { wch: 16 },
+            ];
+
+            // Sheet name from day label (max 31 chars for Excel)
+            const sheetName = dayData.label.substring(0, 31);
+            XLSX.utils.book_append_sheet(wb, ws, sheetName);
+        });
+
+        // Generate and download
+        const fileName = `SEPESQI_Monitoria_${new Date().toISOString().slice(0, 10)}.xlsx`;
+        XLSX.writeFile(wb, fileName);
+        showToast('success', '📥', `Arquivo ${fileName} baixado com sucesso!`);
+    }
+
+    // Export button event
+    document.getElementById('btnExport').addEventListener('click', exportToExcel);
+
     // ---- Init ----
     function init() {
         // Show loading first

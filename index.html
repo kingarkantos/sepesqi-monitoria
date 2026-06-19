@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEPESQI Martha Falcão – Reserva de Monitoria</title>
+    <meta name="description" content="Sistema de reserva de voluntários para monitoria do evento SEPESQI Martha Falcão. Reserve seu horário de credenciamento, apoio interno, cobertura de fotos e vídeos.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📋</text></svg>">
+</head>
+<body>
+    <!-- Animated background -->
+    <div class="bg-animation">
+        <div class="bg-gradient"></div>
+        <div class="bg-dots"></div>
+    </div>
+
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="header-content">
+            <div class="logo-section">
+                <div class="logo-icon">
+                    <span class="logo-emoji">🎓</span>
+                </div>
+                <div class="logo-text">
+                    <h1>SEPESQI</h1>
+                    <p>Martha Falcão – Monitoria 2026</p>
+                </div>
+            </div>
+            <div class="header-stats" id="headerStats">
+                <div class="stat-item">
+                    <span class="stat-number" id="totalReserved">0</span>
+                    <span class="stat-label">Reservadas</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" id="totalAvailable">0</span>
+                    <span class="stat-label">Disponíveis</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Connection status -->
+    <div class="connection-status" id="connectionStatus">
+        <span class="status-dot"></span>
+        <span class="status-text">Conectando...</span>
+    </div>
+
+    <!-- Day navigation tabs -->
+    <nav class="day-nav" id="dayNav">
+        <div class="day-tabs">
+            <button class="day-tab active" data-day="seg-22">
+                <span class="tab-emoji">📅</span>
+                <span class="tab-day">SEG</span>
+                <span class="tab-date">22/06</span>
+            </button>
+            <button class="day-tab" data-day="ter-23">
+                <span class="tab-emoji">📅</span>
+                <span class="tab-day">TER</span>
+                <span class="tab-date">23/06</span>
+            </button>
+            <button class="day-tab" data-day="qui-25">
+                <span class="tab-emoji">📅</span>
+                <span class="tab-day">QUI</span>
+                <span class="tab-date">25/06</span>
+            </button>
+            <button class="day-tab" data-day="sex-26">
+                <span class="tab-emoji">📅</span>
+                <span class="tab-day">SEX</span>
+                <span class="tab-date">26/06</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main content -->
+    <main class="main-content" id="mainContent">
+        <!-- Content will be rendered by JS -->
+    </main>
+
+    <!-- Reservation modal -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal" id="modal">
+            <div class="modal-header">
+                <h3 id="modalTitle">Reservar Vaga</h3>
+                <button class="modal-close" id="modalClose" aria-label="Fechar">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-info" id="modalInfo"></div>
+                <div class="form-group">
+                    <label for="volunteerName">Seu nome completo</label>
+                    <input type="text" id="volunteerName" placeholder="Digite seu nome completo" autocomplete="name" maxlength="60">
+                    <span class="form-hint">Este nome será visível para todos os participantes</span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-cancel" id="btnCancel">Cancelar</button>
+                <button class="btn btn-confirm" id="btnConfirm">
+                    <span class="btn-text">Confirmar Reserva</span>
+                    <span class="btn-loader" style="display:none;">⏳</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cancel confirmation modal -->
+    <div class="modal-overlay" id="cancelModalOverlay">
+        <div class="modal modal-sm" id="cancelModal">
+            <div class="modal-header modal-header-danger">
+                <h3>Cancelar Reserva</h3>
+                <button class="modal-close" id="cancelModalClose" aria-label="Fechar">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p id="cancelModalText">Tem certeza que deseja cancelar esta reserva?</p>
+                <div class="form-group">
+                    <label for="cancelName">Confirme seu nome para cancelar</label>
+                    <input type="text" id="cancelName" placeholder="Digite o nome que usou na reserva" autocomplete="name">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-cancel" id="cancelBtnBack">Voltar</button>
+                <button class="btn btn-danger" id="cancelBtnConfirm">
+                    <span class="btn-text">Confirmar Cancelamento</span>
+                    <span class="btn-loader" style="display:none;">⏳</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast notification -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+    <script src="config.js"></script>
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
